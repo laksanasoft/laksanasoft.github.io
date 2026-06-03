@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PT. Laksana Digital Industri – Technology & Security Solutions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
 --ink: #0a0e17;
@@ -30,8 +31,9 @@ html { scroll-behavior: smooth; font-size: 16px; }
 body {
 background: var(--ink);
 color: var(--text-primary);
-font-family: 'DM Sans', sans-serif;
-font-weight: 300;
+font-family: 'IBM Plex Sans', sans-serif;
+font-weight: 400;
+font-style: normal;
 line-height: 1.7;
 overflow-x: hidden;
 cursor: none;
@@ -88,7 +90,7 @@ flex-shrink: 0;
 }
 .nav-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
 .nav-logo-text span:first-child {
-font-family: 'Syne', sans-serif;
+font-family: 'IBM Plex Sans', sans-serif;
 font-weight: 700; font-size: 14px;
 color: var(--text-primary); letter-spacing: 0.5px;
 }
@@ -118,7 +120,7 @@ background: transparent;
 border: 1px solid var(--electric);
 color: var(--electric);
 padding: 8px 20px; border-radius: 6px;
-font-family: 'DM Sans', sans-serif;
+font-family: 'IBM Plex Sans', sans-serif;
 font-size: 13px; font-weight: 400;
 transition: background 0.2s, color 0.2s;
 }
@@ -181,8 +183,8 @@ animation: pulse 2s ease-in-out infinite;
 }
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.6)} }
 h1 {
-font-family: 'Syne', sans-serif;
-font-weight: 800;
+font-family: 'IBM Plex Sans', sans-serif;
+font-weight: 700;
 font-size: clamp(40px, 6vw, 76px);
 line-height: 1.05;
 letter-spacing: -2px;
@@ -209,7 +211,7 @@ animation: fadeUp 0.8s 0.3s ease both;
 background: linear-gradient(135deg, var(--electric), var(--electric-dim));
 color: var(--ink);
 padding: 14px 32px; border-radius: 8px;
-font-family: 'DM Sans', sans-serif;
+font-family: 'IBM Plex Sans', sans-serif;
 font-size: 14px; font-weight: 500;
 border: none; text-decoration: none;
 display: inline-flex; align-items: center; gap: 8px;
@@ -222,7 +224,7 @@ background: transparent;
 border: 1px solid var(--glass-border);
 color: var(--text-primary);
 padding: 14px 32px; border-radius: 8px;
-font-family: 'DM Sans', sans-serif;
+font-family: 'IBM Plex Sans', sans-serif;
 font-size: 14px; font-weight: 400;
 text-decoration: none;
 display: inline-flex; align-items: center; gap: 8px;
@@ -238,7 +240,7 @@ padding-top: 40px;
 border-top: 1px solid var(--glass-border);
 }
 .hero-stat-number {
-font-family: 'Syne', sans-serif;
+font-family: 'IBM Plex Sans', sans-serif;
 font-size: 36px; font-weight: 700;
 color: var(--text-primary);
 line-height: 1;
@@ -267,7 +269,7 @@ content: ''; display: block;
 width: 32px; height: 1px; background: var(--electric);
 }
 h2 {
-font-family: 'Syne', sans-serif;
+font-family: 'IBM Plex Sans', sans-serif;
 font-size: clamp(28px, 4vw, 48px);
 font-weight: 700; line-height: 1.15;
 letter-spacing: -1px;
@@ -341,7 +343,7 @@ background: var(--glass);
 border: 1px solid var(--glass-border);
 color: var(--text-secondary);
 padding: 8px 20px; border-radius: 100px;
-font-family: 'DM Sans', sans-serif;
+font-family: 'IBM Plex Sans', sans-serif;
 font-size: 13px; transition: all 0.2s;
 }
 .tab-btn.active, .tab-btn:hover {
@@ -382,7 +384,7 @@ transition: background 0.2s;
 }
 .service-card:hover .service-icon { background: rgba(0,212,255,0.15); }
 .service-card h3 {
-font-family: 'Syne', sans-serif;
+font-family: 'IBM Plex Sans', sans-serif;
 font-size: 18px; font-weight: 600; margin-bottom: 10px;
 }
 .service-card p {
@@ -417,13 +419,13 @@ transition: background 0.2s;
 }
 .why-item:last-child { border-bottom: none; }
 .why-num {
-font-family: 'Syne', sans-serif;
+font-family: 'IBM Plex Sans', sans-serif;
 font-size: 13px; font-weight: 700;
 color: var(--electric); opacity: 0.6;
 padding-top: 4px;
 }
 .why-item h3 {
-font-family: 'Syne', sans-serif;
+font-family: 'IBM Plex Sans', sans-serif;
 font-size: 16px; font-weight: 600; margin-bottom: 8px;
 }
 .why-item p { color: var(--text-secondary); font-size: 14px; line-height: 1.8; }
@@ -436,7 +438,7 @@ border: 1px solid var(--glass-border);
 border-radius: var(--radius-lg); padding: 32px;
 }
 .tech-stack h4 {
-font-family: 'Syne', sans-serif;
+font-family: 'IBM Plex Sans', sans-serif;
 font-size: 14px; font-weight: 600;
 color: var(--text-secondary); letter-spacing: 1px;
 text-transform: uppercase; margin-bottom: 24px;
@@ -479,14 +481,14 @@ background: var(--surface-3);
 border: 1px solid var(--electric);
 border-radius: 50%;
 display: flex; align-items: center; justify-content: center;
-font-family: 'Syne', sans-serif;
+font-family: 'IBM Plex Sans', sans-serif;
 font-size: 18px; font-weight: 700; color: var(--electric);
 margin-bottom: 24px;
 position: relative;
 box-shadow: 0 0 24px rgba(0,212,255,0.15);
 }
 .process-step h3 {
-font-family: 'Syne', sans-serif;
+font-family: 'IBM Plex Sans', sans-serif;
 font-size: 16px; font-weight: 600; margin-bottom: 10px;
 }
 .process-step p { color: var(--text-secondary); font-size: 14px; line-height: 1.8; }
@@ -541,7 +543,7 @@ border: 1px solid var(--glass-border);
 border-radius: 8px;
 padding: 12px 16px;
 color: var(--text-primary);
-font-family: 'DM Sans', sans-serif;
+font-family: 'IBM Plex Sans', sans-serif;
 font-size: 14px;
 transition: border-color 0.2s, box-shadow 0.2s;
 outline: none;
@@ -563,7 +565,7 @@ color: var(--ink);
 border: none;
 padding: 14px;
 border-radius: 8px;
-font-family: 'DM Sans', sans-serif;
+font-family: 'IBM Plex Sans', sans-serif;
 font-size: 14px; font-weight: 500;
 display: flex; align-items: center; justify-content: center; gap: 8px;
 transition: opacity 0.2s, transform 0.2s;
@@ -585,7 +587,7 @@ font-size: 14px; line-height: 1.9;
 margin-top: 16px; max-width: 280px;
 }
 .footer-col h4 {
-font-family: 'Syne', sans-serif;
+font-family: 'IBM Plex Sans', sans-serif;
 font-size: 13px; font-weight: 600;
 letter-spacing: 1px; text-transform: uppercase;
 color: var(--text-secondary); margin-bottom: 20px;
@@ -626,6 +628,7 @@ transition: opacity 0.7s ease, transform 0.7s ease;
 .about-visual { max-width: 320px; margin: 0 auto; }
 .why-grid { grid-template-columns: 1fr; }
 .footer-top { grid-template-columns: 1fr 1fr; }
+.why-visual { position: static; }
 }
 @media (max-width: 768px) {
 .hero-visual { display: none; }
@@ -638,6 +641,51 @@ transition: opacity 0.7s ease, transform 0.7s ease;
 .footer-bottom { flex-direction: column; text-align: center; }
 body { cursor: auto; }
 .cursor, .cursor-ring { display: none; }
+/* Hero adjustments */
+.hero { padding: 100px 20px 60px; }
+h1 { letter-spacing: -1px; }
+.hero-stats { gap: 28px; margin-top: 48px; }
+.hero-stat-number { font-size: 28px; }
+/* Services */
+.services-tabs { gap: 6px; }
+.tab-btn { padding: 6px 14px; font-size: 12px; }
+.services-grid { grid-template-columns: 1fr; }
+/* Process steps */
+.process-steps { grid-template-columns: 1fr; gap: 32px; }
+.process-step { padding: 0 0 0 16px; border-left: 2px solid rgba(0,212,255,0.2); }
+/* Contact form */
+.contact-form-wrap { padding: 24px 20px; }
+/* About */
+.about { padding: 60px 20px; }
+.about-visual { max-width: 240px; }
+/* Why section */
+.why-us { padding: 60px 20px; }
+.tech-items { gap: 8px; }
+.tech-item { padding: 8px 12px; font-size: 12px; }
+/* Footer */
+.footer-bottom-right { flex-wrap: wrap; justify-content: center; gap: 12px; }
+/* Form */
+.form-group input,
+.form-group select,
+.form-group textarea { font-size: 16px; /* prevent iOS zoom */ }
+/* Nav logo text on small screens */
+.nav-logo-text span:first-child { font-size: 12px; }
+}
+@media (max-width: 480px) {
+nav { padding: 0 16px; }
+.nav-logo-text span:first-child { display: none; }
+.hero-actions { flex-direction: column; }
+.hero-actions a { width: 100%; justify-content: center; }
+.hero-stats { flex-direction: column; gap: 20px; border-top: none; padding-top: 0; }
+.hero-stat-number { font-size: 32px; }
+h2 { letter-spacing: -0.5px; }
+.services { padding: 60px 16px; }
+.process { padding: 60px 16px; }
+.contact { padding: 60px 16px; }
+.cta-section { padding: 60px 16px; }
+.service-card { padding: 24px 20px; }
+.contact-form-wrap { padding: 20px 16px; }
+.mobile-menu a { font-size: 24px; }
 }
 .mobile-menu {
 position: fixed; inset: 0; z-index: 99;
@@ -650,7 +698,7 @@ transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
 }
 .mobile-menu.open { transform: none; }
 .mobile-menu a {
-font-family: 'Syne', sans-serif;
+font-family: 'IBM Plex Sans', sans-serif;
 font-size: 28px; font-weight: 700;
 color: var(--text-primary); text-decoration: none;
 transition: color 0.2s;
@@ -1205,7 +1253,7 @@ Hubungi Kami Sekarang
 </div>
 </div>
 <div class="contact-form-wrap reveal" style="transition-delay:0.15s">
-<h3 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:600;margin-bottom:8px">Kirim Pesan</h3>
+<h3 style="font-family:'IBM Plex Sans',sans-serif;font-size:20px;font-weight:600;margin-bottom:8px">Kirim Pesan</h3>
 <p style="color:var(--text-secondary);font-size:14px;margin-bottom:28px">Isi formulir di bawah, kami akan menghubungi Anda segera.</p>
 <div class="form-row">
 <div class="form-group">
