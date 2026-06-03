@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PT. Laksana Digital Industri – Technology & Security Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+--ink: #0a0e17;
+--ink-2: #1a2235;
+--steel: #1e3a5f;
+--electric: #00d4ff;
+--electric-dim: #0099bb;
+--amber: #f59e0b;
+--surface: #0f1623;
+--surface-2: #151e2e;
+--surface-3: #1c2840;
+--glass: rgba(255,255,255,0.04);
+--glass-border: rgba(0,212,255,0.15);
+--text-primary: #e8edf5;
+--text-secondary: #8a9bb5;
+--text-muted: #4a5a72;
+--radius: 12px;
+--radius-lg: 20px;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+background: var(--ink);
+color: var(--text-primary);
+font-family: 'DM Sans', sans-serif;
+font-weight: 300;
+line-height: 1.7;
+overflow-x: hidden;
+cursor: none;
+}
+::selection { background: var(--electric); color: var(--ink); }
+.cursor {
+width: 12px; height: 12px;
+background: var(--electric);
+border-radius: 50%;
+position: fixed; top: 0; left: 0;
+pointer-events: none;
+z-index: 9999;
+transform: translate(-50%,-50%);
+transition: transform 0.1s, width 0.2s, height 0.2s, opacity 0.2s;
+mix-blend-mode: screen;
+}
+.cursor-ring {
+width: 36px; height: 36px;
+border: 1px solid rgba(0,212,255,0.5);
+border-radius: 50%;
+position: fixed; top: 0; left: 0;
+pointer-events: none;
+z-index: 9998;
+transform: translate(-50%,-50%);
+transition: transform 0.15s ease, width 0.3s, height 0.3s;
+}
+a, button, .nav-link, .service-card { cursor: none; }
+.noise-overlay {
+position: fixed; inset: 0;
+background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+pointer-events: none; z-index: 1; opacity: 0.4;
+}
+nav {
+position: fixed; top: 0; left: 0; right: 0;
+z-index: 100;
+padding: 0 clamp(20px, 5vw, 80px);
+height: 70px;
+display: flex; align-items: center; justify-content: space-between;
+background: rgba(10,14,23,0.8);
+backdrop-filter: blur(20px);
+border-bottom: 1px solid rgba(0,212,255,0.08);
+transition: background 0.3s;
+}
+.nav-logo {
+display: flex; align-items: center; gap: 12px;
+text-decoration: none;
+}
+.nav-logo-mark {
+width: 38px; height: 38px;
+background: linear-gradient(135deg, var(--electric), var(--steel));
+border-radius: 8px;
+display: flex; align-items: center; justify-content: center;
+flex-shrink: 0;
+}
+.nav-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+.nav-logo-text span:first-child {
+font-family: 'Syne', sans-serif;
+font-weight: 700; font-size: 14px;
+color: var(--text-primary); letter-spacing: 0.5px;
+}
+.nav-logo-text span:last-child {
+font-size: 10px; color: var(--electric); letter-spacing: 2px; text-transform: uppercase;
+}
+.nav-links {
+display: flex; align-items: center; gap: 32px;
+list-style: none;
+}
+.nav-link {
+text-decoration: none; color: var(--text-secondary);
+font-size: 13px; font-weight: 400; letter-spacing: 0.5px;
+transition: color 0.2s;
+position: relative;
+}
+.nav-link::after {
+content: ''; position: absolute; bottom: -4px; left: 0;
+width: 0; height: 1px;
+background: var(--electric);
+transition: width 0.3s;
+}
+.nav-link:hover { color: var(--text-primary); }
+.nav-link:hover::after { width: 100%; }
+.nav-cta {
+background: transparent;
+border: 1px solid var(--electric);
+color: var(--electric);
+padding: 8px 20px; border-radius: 6px;
+font-family: 'DM Sans', sans-serif;
+font-size: 13px; font-weight: 400;
+transition: background 0.2s, color 0.2s;
+}
+.nav-cta:hover { background: var(--electric); color: var(--ink); }
+.hamburger {
+display: none;
+flex-direction: column; gap: 5px;
+background: none; border: none;
+padding: 4px;
+}
+.hamburger span {
+width: 24px; height: 1.5px;
+background: var(--text-primary);
+display: block;
+transition: transform 0.3s, opacity 0.3s;
+}
+section { position: relative; z-index: 2; }
+.hero {
+min-height: 100vh;
+display: flex; flex-direction: column; justify-content: center;
+padding: clamp(100px, 10vw, 140px) clamp(20px, 5vw, 80px) 80px;
+overflow: hidden;
+}
+.hero-bg {
+position: absolute; inset: 0;
+background:
+radial-gradient(ellipse 80% 60% at 60% 30%, rgba(0,150,200,0.08) 0%, transparent 60%),
+radial-gradient(ellipse 40% 50% at 10% 70%, rgba(30,58,95,0.3) 0%, transparent 50%),
+var(--ink);
+}
+.hero-grid {
+position: absolute; inset: 0;
+background-image:
+linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+background-size: 60px 60px;
+mask-image: radial-gradient(ellipse 80% 80% at 60% 30%, black 30%, transparent 80%);
+}
+.hero-line {
+position: absolute; top: 0; left: 0; right: 0; height: 1px;
+background: linear-gradient(90deg, transparent, var(--electric), transparent);
+animation: scanline 4s ease-in-out infinite;
+}
+@keyframes scanline { 0%,100%{top:0;opacity:0} 10%{opacity:1} 90%{opacity:0.5} 50%{top:100%} }
+.hero-content { position: relative; max-width: 760px; }
+.hero-badge {
+display: inline-flex; align-items: center; gap: 8px;
+background: var(--glass);
+border: 1px solid var(--glass-border);
+border-radius: 100px;
+padding: 6px 16px; margin-bottom: 32px;
+font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+color: var(--electric);
+animation: fadeUp 0.8s ease both;
+}
+.hero-badge-dot {
+width: 6px; height: 6px; border-radius: 50%;
+background: var(--electric);
+animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.6)} }
+h1 {
+font-family: 'Syne', sans-serif;
+font-weight: 800;
+font-size: clamp(40px, 6vw, 76px);
+line-height: 1.05;
+letter-spacing: -2px;
+animation: fadeUp 0.8s 0.1s ease both;
+}
+h1 span {
+background: linear-gradient(90deg, var(--electric), #60d8ff, var(--amber));
+-webkit-background-clip: text; -webkit-text-fill-color: transparent;
+background-clip: text;
+}
+.hero-sub {
+margin-top: 24px;
+font-size: clamp(15px, 1.5vw, 18px);
+color: var(--text-secondary);
+max-width: 520px; line-height: 1.8;
+animation: fadeUp 0.8s 0.2s ease both;
+}
+.hero-actions {
+margin-top: 44px;
+display: flex; flex-wrap: wrap; gap: 16px;
+animation: fadeUp 0.8s 0.3s ease both;
+}
+.btn-primary {
+background: linear-gradient(135deg, var(--electric), var(--electric-dim));
+color: var(--ink);
+padding: 14px 32px; border-radius: 8px;
+font-family: 'DM Sans', sans-serif;
+font-size: 14px; font-weight: 500;
+border: none; text-decoration: none;
+display: inline-flex; align-items: center; gap: 8px;
+transition: transform 0.2s, box-shadow 0.2s;
+box-shadow: 0 4px 24px rgba(0,212,255,0.25);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,212,255,0.4); }
+.btn-secondary {
+background: transparent;
+border: 1px solid var(--glass-border);
+color: var(--text-primary);
+padding: 14px 32px; border-radius: 8px;
+font-family: 'DM Sans', sans-serif;
+font-size: 14px; font-weight: 400;
+text-decoration: none;
+display: inline-flex; align-items: center; gap: 8px;
+transition: border-color 0.2s, background 0.2s;
+backdrop-filter: blur(8px);
+}
+.btn-secondary:hover { border-color: var(--electric); background: var(--glass); }
+.hero-stats {
+margin-top: 72px;
+display: flex; flex-wrap: wrap; gap: 48px;
+animation: fadeUp 0.8s 0.4s ease both;
+padding-top: 40px;
+border-top: 1px solid var(--glass-border);
+}
+.hero-stat-number {
+font-family: 'Syne', sans-serif;
+font-size: 36px; font-weight: 700;
+color: var(--text-primary);
+line-height: 1;
+}
+.hero-stat-number span { color: var(--electric); }
+.hero-stat-label {
+font-size: 12px; color: var(--text-secondary); letter-spacing: 1px;
+text-transform: uppercase; margin-top: 4px;
+}
+.hero-visual {
+position: absolute; right: 0; top: 50%;
+transform: translateY(-50%);
+width: 45%; max-width: 600px;
+opacity: 0.35;
+pointer-events: none;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+.section-label {
+font-size: 11px; letter-spacing: 3px;
+text-transform: uppercase; color: var(--electric);
+font-weight: 500; margin-bottom: 16px;
+display: flex; align-items: center; gap: 12px;
+}
+.section-label::before {
+content: ''; display: block;
+width: 32px; height: 1px; background: var(--electric);
+}
+h2 {
+font-family: 'Syne', sans-serif;
+font-size: clamp(28px, 4vw, 48px);
+font-weight: 700; line-height: 1.15;
+letter-spacing: -1px;
+}
+h2 em { font-style: normal; color: var(--electric); }
+.about {
+padding: clamp(80px, 10vw, 120px) clamp(20px, 5vw, 80px);
+display: grid; grid-template-columns: 1fr 1fr;
+gap: clamp(40px, 6vw, 100px); align-items: center;
+}
+.about-visual {
+position: relative; aspect-ratio: 1;
+max-width: 480px;
+}
+.about-ring {
+position: absolute; inset: 0;
+border: 1px solid var(--glass-border);
+border-radius: 50%;
+animation: spin 20s linear infinite;
+}
+.about-ring::before {
+content: '';
+position: absolute; top: -3px; left: 50%;
+width: 6px; height: 6px; border-radius: 50%;
+background: var(--electric);
+transform: translateX(-50%);
+}
+@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+.about-ring-2 {
+position: absolute; inset: 15%;
+border: 1px dashed rgba(0,212,255,0.15);
+border-radius: 50%;
+animation: spin 30s linear infinite reverse;
+}
+.about-core {
+position: absolute; inset: 25%;
+background: var(--surface-2);
+border-radius: 50%;
+border: 1px solid var(--glass-border);
+display: flex; align-items: center; justify-content: center;
+flex-direction: column; gap: 8px;
+}
+.about-core-icon { color: var(--electric); }
+.about-text { margin-top: 24px; color: var(--text-secondary); line-height: 1.9; }
+.about-features {
+margin-top: 32px;
+display: flex; flex-direction: column; gap: 12px;
+}
+.about-feature {
+display: flex; align-items: center; gap: 12px;
+font-size: 14px; color: var(--text-secondary);
+}
+.about-feature-dot {
+width: 6px; height: 6px; border-radius: 50%;
+background: var(--electric); flex-shrink: 0;
+}
+.services {
+padding: clamp(80px, 10vw, 120px) clamp(20px, 5vw, 80px);
+background: var(--surface);
+}
+.services-header { text-align: center; margin-bottom: 72px; }
+.services-header h2 { max-width: 600px; margin: 0 auto; }
+.services-header .section-label { justify-content: center; }
+.services-header .section-label::before { display: none; }
+.services-tabs {
+display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+margin-top: 32px; margin-bottom: 48px;
+}
+.tab-btn {
+background: var(--glass);
+border: 1px solid var(--glass-border);
+color: var(--text-secondary);
+padding: 8px 20px; border-radius: 100px;
+font-family: 'DM Sans', sans-serif;
+font-size: 13px; transition: all 0.2s;
+}
+.tab-btn.active, .tab-btn:hover {
+background: rgba(0,212,255,0.1);
+border-color: var(--electric);
+color: var(--electric);
+}
+.services-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+gap: 20px;
+}
+.service-card {
+background: var(--surface-2);
+border: 1px solid var(--glass-border);
+border-radius: var(--radius-lg);
+padding: 32px;
+transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+position: relative; overflow: hidden;
+}
+.service-card::before {
+content: '';
+position: absolute; top: 0; left: 0; right: 0; height: 2px;
+background: linear-gradient(90deg, transparent, var(--electric), transparent);
+transform: scaleX(0);
+transition: transform 0.4s;
+}
+.service-card:hover { transform: translateY(-4px); border-color: rgba(0,212,255,0.3); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.service-card:hover::before { transform: scaleX(1); }
+.service-icon {
+width: 52px; height: 52px;
+background: rgba(0,212,255,0.08);
+border: 1px solid rgba(0,212,255,0.15);
+border-radius: var(--radius);
+display: flex; align-items: center; justify-content: center;
+margin-bottom: 20px; color: var(--electric);
+transition: background 0.2s;
+}
+.service-card:hover .service-icon { background: rgba(0,212,255,0.15); }
+.service-card h3 {
+font-family: 'Syne', sans-serif;
+font-size: 18px; font-weight: 600; margin-bottom: 10px;
+}
+.service-card p {
+color: var(--text-secondary);
+font-size: 14px; line-height: 1.8;
+}
+.service-tags {
+display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px;
+}
+.service-tag {
+font-size: 11px; padding: 3px 10px;
+border: 1px solid var(--glass-border);
+border-radius: 100px; color: var(--text-muted);
+}
+.hidden-card { display: none; }
+.why-us {
+padding: clamp(80px, 10vw, 120px) clamp(20px, 5vw, 80px);
+}
+.why-grid {
+display: grid; grid-template-columns: 1fr 1fr;
+gap: clamp(40px, 6vw, 100px); align-items: start;
+margin-top: 60px;
+}
+.why-list { display: flex; flex-direction: column; gap: 0; }
+.why-item {
+padding: 28px 0;
+border-bottom: 1px solid rgba(255,255,255,0.05);
+display: grid; grid-template-columns: 48px 1fr;
+gap: 20px; align-items: start;
+cursor: default;
+transition: background 0.2s;
+}
+.why-item:last-child { border-bottom: none; }
+.why-num {
+font-family: 'Syne', sans-serif;
+font-size: 13px; font-weight: 700;
+color: var(--electric); opacity: 0.6;
+padding-top: 4px;
+}
+.why-item h3 {
+font-family: 'Syne', sans-serif;
+font-size: 16px; font-weight: 600; margin-bottom: 8px;
+}
+.why-item p { color: var(--text-secondary); font-size: 14px; line-height: 1.8; }
+.why-visual {
+position: sticky; top: 100px;
+}
+.tech-stack {
+background: var(--surface-2);
+border: 1px solid var(--glass-border);
+border-radius: var(--radius-lg); padding: 32px;
+}
+.tech-stack h4 {
+font-family: 'Syne', sans-serif;
+font-size: 14px; font-weight: 600;
+color: var(--text-secondary); letter-spacing: 1px;
+text-transform: uppercase; margin-bottom: 24px;
+}
+.tech-items {
+display: flex; flex-wrap: wrap; gap: 10px;
+}
+.tech-item {
+display: flex; align-items: center; gap: 8px;
+background: var(--surface-3);
+border: 1px solid var(--glass-border);
+border-radius: 8px; padding: 10px 14px;
+font-size: 13px; color: var(--text-secondary);
+transition: border-color 0.2s, color 0.2s;
+}
+.tech-item:hover { border-color: var(--electric); color: var(--text-primary); }
+.tech-item svg { color: var(--electric); flex-shrink: 0; }
+.process {
+padding: clamp(80px, 10vw, 120px) clamp(20px, 5vw, 80px);
+background: var(--surface);
+}
+.process-header { margin-bottom: 72px; }
+.process-steps {
+display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+gap: 0;
+position: relative;
+}
+.process-steps::before {
+content: '';
+position: absolute; top: 28px; left: 48px; right: 48px; height: 1px;
+background: linear-gradient(90deg, var(--electric), rgba(0,212,255,0.1));
+}
+.process-step {
+padding: 0 24px;
+position: relative; z-index: 1;
+}
+.step-num {
+width: 56px; height: 56px;
+background: var(--surface-3);
+border: 1px solid var(--electric);
+border-radius: 50%;
+display: flex; align-items: center; justify-content: center;
+font-family: 'Syne', sans-serif;
+font-size: 18px; font-weight: 700; color: var(--electric);
+margin-bottom: 24px;
+position: relative;
+box-shadow: 0 0 24px rgba(0,212,255,0.15);
+}
+.process-step h3 {
+font-family: 'Syne', sans-serif;
+font-size: 16px; font-weight: 600; margin-bottom: 10px;
+}
+.process-step p { color: var(--text-secondary); font-size: 14px; line-height: 1.8; }
+.contact {
+padding: clamp(80px, 10vw, 120px) clamp(20px, 5vw, 80px);
+}
+.contact-inner {
+display: grid; grid-template-columns: 1fr 1fr;
+gap: clamp(40px, 6vw, 80px);
+}
+.contact-info h2 { margin-bottom: 20px; }
+.contact-info p { color: var(--text-secondary); margin-bottom: 40px; line-height: 1.9; }
+.contact-detail {
+display: flex; align-items: center; gap: 16px;
+padding: 20px 0;
+border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.contact-detail:last-of-type { border-bottom: none; }
+.contact-detail-icon {
+width: 44px; height: 44px; flex-shrink: 0;
+background: rgba(0,212,255,0.08);
+border: 1px solid rgba(0,212,255,0.15);
+border-radius: 10px;
+display: flex; align-items: center; justify-content: center;
+color: var(--electric);
+}
+.contact-detail-text { display: flex; flex-direction: column; gap: 2px; }
+.contact-detail-label {
+font-size: 11px; letter-spacing: 1.5px;
+text-transform: uppercase; color: var(--text-muted);
+}
+.contact-detail-value {
+font-size: 15px; color: var(--text-primary); font-weight: 400;
+}
+.contact-form-wrap {
+background: var(--surface-2);
+border: 1px solid var(--glass-border);
+border-radius: var(--radius-lg); padding: 40px;
+}
+.form-group { margin-bottom: 20px; }
+.form-group label {
+display: block; font-size: 12px; letter-spacing: 1px;
+text-transform: uppercase; color: var(--text-muted);
+margin-bottom: 8px;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+width: 100%;
+background: var(--surface-3);
+border: 1px solid var(--glass-border);
+border-radius: 8px;
+padding: 12px 16px;
+color: var(--text-primary);
+font-family: 'DM Sans', sans-serif;
+font-size: 14px;
+transition: border-color 0.2s, box-shadow 0.2s;
+outline: none;
+-webkit-appearance: none;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+border-color: var(--electric);
+box-shadow: 0 0 0 3px rgba(0,212,255,0.08);
+}
+.form-group select { cursor: none; }
+.form-group textarea { resize: vertical; min-height: 120px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-submit {
+width: 100%;
+background: linear-gradient(135deg, var(--electric), var(--electric-dim));
+color: var(--ink);
+border: none;
+padding: 14px;
+border-radius: 8px;
+font-family: 'DM Sans', sans-serif;
+font-size: 14px; font-weight: 500;
+display: flex; align-items: center; justify-content: center; gap: 8px;
+transition: opacity 0.2s, transform 0.2s;
+box-shadow: 0 4px 24px rgba(0,212,255,0.2);
+}
+.form-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+footer {
+background: var(--ink-2);
+border-top: 1px solid rgba(255,255,255,0.05);
+padding: 60px clamp(20px, 5vw, 80px) 32px;
+}
+.footer-top {
+display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+gap: 48px; margin-bottom: 48px;
+}
+.footer-brand p {
+color: var(--text-secondary);
+font-size: 14px; line-height: 1.9;
+margin-top: 16px; max-width: 280px;
+}
+.footer-col h4 {
+font-family: 'Syne', sans-serif;
+font-size: 13px; font-weight: 600;
+letter-spacing: 1px; text-transform: uppercase;
+color: var(--text-secondary); margin-bottom: 20px;
+}
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-links a {
+color: var(--text-muted); font-size: 14px;
+text-decoration: none; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--electric); }
+.footer-bottom {
+border-top: 1px solid rgba(255,255,255,0.05);
+padding-top: 28px;
+display: flex; justify-content: space-between; align-items: center;
+flex-wrap: wrap; gap: 16px;
+}
+.footer-bottom p { color: var(--text-muted); font-size: 13px; }
+.footer-bottom-right { display: flex; gap: 24px; }
+.footer-bottom-right a { color: var(--text-muted); font-size: 13px; text-decoration: none; transition: color 0.2s; }
+.footer-bottom-right a:hover { color: var(--electric); }
+.cta-section {
+padding: clamp(80px, 10vw, 120px) clamp(20px, 5vw, 80px);
+background: var(--surface);
+text-align: center;
+}
+.cta-inner {
+max-width: 640px; margin: 0 auto;
+}
+.cta-inner h2 { margin-bottom: 20px; }
+.cta-inner p { color: var(--text-secondary); margin-bottom: 40px; font-size: 16px; line-height: 1.9; }
+.reveal {
+opacity: 0; transform: translateY(32px);
+transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+@media (max-width: 1024px) {
+.about { grid-template-columns: 1fr; }
+.about-visual { max-width: 320px; margin: 0 auto; }
+.why-grid { grid-template-columns: 1fr; }
+.footer-top { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+.hero-visual { display: none; }
+.nav-links { display: none; }
+.hamburger { display: flex; }
+.contact-inner { grid-template-columns: 1fr; }
+.form-row { grid-template-columns: 1fr; }
+.process-steps::before { display: none; }
+.footer-top { grid-template-columns: 1fr; gap: 32px; }
+.footer-bottom { flex-direction: column; text-align: center; }
+body { cursor: auto; }
+.cursor, .cursor-ring { display: none; }
+}
+.mobile-menu {
+position: fixed; inset: 0; z-index: 99;
+background: rgba(10,14,23,0.97);
+backdrop-filter: blur(20px);
+display: flex; flex-direction: column; align-items: center; justify-content: center;
+gap: 32px;
+transform: translateX(100%);
+transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.mobile-menu.open { transform: none; }
+.mobile-menu a {
+font-family: 'Syne', sans-serif;
+font-size: 28px; font-weight: 700;
+color: var(--text-primary); text-decoration: none;
+transition: color 0.2s;
+}
+.mobile-menu a:hover { color: var(--electric); }
+.mobile-menu-close {
+position: absolute; top: 20px; right: 20px;
+background: none; border: none; color: var(--text-primary);
+font-size: 24px;
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="noise-overlay"></div>
+
+<nav id="navbar">
+<a href="#" class="nav-logo">
+<div class="nav-logo-mark">
+<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11 2L20 7V15L11 20L2 15V7L11 2Z" stroke="white" stroke-width="1.5" fill="none"/>
+<path d="M11 6L16 9V13L11 16L6 13V9L11 6Z" fill="white" opacity="0.8"/>
+</svg>
+</div>
+<div class="nav-logo-text">
+<span>PT. Laksana Digital Industri</span>
+<span>Technology Solutions</span>
+</div>
+</a>
+<ul class="nav-links">
+<li><a href="#about" class="nav-link">Tentang</a></li>
+<li><a href="#services" class="nav-link">Layanan</a></li>
+<li><a href="#why" class="nav-link">Keunggulan</a></li>
+<li><a href="#process" class="nav-link">Proses</a></li>
+<li><a href="#contact" class="nav-link">Kontak</a></li>
+</ul>
+<button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Konsultasi Gratis</button>
+<button class="hamburger" id="hamburger" aria-label="Menu">
+<span></span><span></span><span></span>
+</button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+<button class="mobile-menu-close" id="menuClose">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+</button>
+<a href="#about" onclick="closeMobileMenu()">Tentang</a>
+<a href="#services" onclick="closeMobileMenu()">Layanan</a>
+<a href="#why" onclick="closeMobileMenu()">Keunggulan</a>
+<a href="#process" onclick="closeMobileMenu()">Proses</a>
+<a href="#contact" onclick="closeMobileMenu()">Kontak</a>
+</div>
+
+<section class="hero">
+<div class="hero-bg"></div>
+<div class="hero-grid"></div>
+<div class="hero-line"></div>
+<div class="hero-content">
+<div class="hero-badge">
+<span class="hero-badge-dot"></span>
+Berbasis di Banjarmasin, Kalimantan Selatan
+</div>
+<h1>Solusi Teknologi<br><span>Terintegrasi &amp;</span><br>Terpercaya</h1>
+<p class="hero-sub">PT. Laksana Digital Industri menghadirkan layanan teknologi end-to-end — dari keamanan digital, forensik, hingga infrastruktur cerdas untuk bisnis modern Indonesia.</p>
+<div class="hero-actions">
+<a href="#services" class="btn-primary">
+<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+Eksplorasi Layanan
+</a>
+<a href="#contact" class="btn-secondary">
+Hubungi Kami
+<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+</a>
+</div>
+<div class="hero-stats">
+<div>
+<div class="hero-stat-number">100<span>+</span></div>
+<div class="hero-stat-label">Klien Terlayani</div>
+</div>
+<div>
+<div class="hero-stat-number">15<span>+</span></div>
+<div class="hero-stat-label">Layanan Aktif</div>
+</div>
+<div>
+<div class="hero-stat-number">24<span>/7</span></div>
+<div class="hero-stat-label">Dukungan Teknis</div>
+</div>
+<div>
+<div class="hero-stat-number">5<span>+</span></div>
+<div class="hero-stat-label">Tahun Pengalaman</div>
+</div>
+</div>
+</div>
+<svg class="hero-visual" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="250" cy="250" r="200" stroke="#00d4ff" stroke-width="0.5" stroke-dasharray="4 8"/>
+<circle cx="250" cy="250" r="150" stroke="#00d4ff" stroke-width="0.5" stroke-dasharray="2 6"/>
+<circle cx="250" cy="250" r="100" stroke="#00d4ff" stroke-width="1"/>
+<circle cx="250" cy="250" r="50" fill="rgba(0,212,255,0.05)" stroke="#00d4ff" stroke-width="1.5"/>
+<circle cx="250" cy="50" r="6" fill="#00d4ff"/><circle cx="450" cy="250" r="6" fill="#00d4ff"/>
+<circle cx="250" cy="450" r="6" fill="#00d4ff"/><circle cx="50" cy="250" r="6" fill="#00d4ff"/>
+<line x1="250" y1="50" x2="250" y2="200" stroke="#00d4ff" stroke-width="0.5"/>
+<line x1="450" y1="250" x2="300" y2="250" stroke="#00d4ff" stroke-width="0.5"/>
+<line x1="250" y1="450" x2="250" y2="300" stroke="#00d4ff" stroke-width="0.5"/>
+<line x1="50" y1="250" x2="200" y2="250" stroke="#00d4ff" stroke-width="0.5"/>
+<text x="240" y="258" fill="#00d4ff" font-size="16" font-family="monospace">LDI</text>
+</svg>
+</section>
+
+<section class="about" id="about">
+<div class="about-visual reveal">
+<div class="about-ring"></div>
+<div class="about-ring-2"></div>
+<div class="about-core">
+<svg class="about-core-icon" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+</svg>
+<span style="font-size:12px;color:var(--text-muted);letter-spacing:1px">DIGITAL</span>
+</div>
+</div>
+<div class="about-content reveal" style="transition-delay:0.15s">
+<div class="section-label">Tentang Perusahaan</div>
+<h2>Inovasi Tanpa Batas untuk <em>Indonesia Digital</em></h2>
+<p class="about-text">PT. Laksana Digital Industri adalah perusahaan teknologi yang berbasis di Banjarmasin, Kalimantan Selatan. Kami berkomitmen menghadirkan solusi teknologi terintegrasi yang mencakup keamanan siber, forensik digital, infrastruktur jaringan, hingga pengembangan sistem cerdas berbasis IoT dan kecerdasan buatan.</p>
+<p class="about-text">Dengan tim profesional berpengalaman dan teknologi mutakhir, kami menjadi mitra terpercaya bagi pemerintah, korporasi, maupun usaha kecil menengah di seluruh Indonesia.</p>
+<div class="about-features">
+<div class="about-feature"><span class="about-feature-dot"></span>Bersertifikat dan berlisensi resmi di bidang teknologi keamanan</div>
+<div class="about-feature"><span class="about-feature-dot"></span>Tim insinyur tersertifikat dengan pengalaman lintas industri</div>
+<div class="about-feature"><span class="about-feature-dot"></span>Solusi custom sesuai kebutuhan spesifik klien</div>
+<div class="about-feature"><span class="about-feature-dot"></span>Dukungan teknis 24 jam, 7 hari seminggu</div>
+</div>
+</div>
+</section>
+
+<section class="services" id="services">
+<div class="services-header reveal">
+<div class="section-label">Layanan Kami</div>
+<h2>Solusi Komprehensif untuk <em>Kebutuhan Teknologi</em> Anda</h2>
+<div class="services-tabs">
+<button class="tab-btn active" onclick="filterCards('all', this)">Semua Layanan</button>
+<button class="tab-btn" onclick="filterCards('investigasi', this)">Investigasi</button>
+<button class="tab-btn" onclick="filterCards('forensik', this)">Forensik Digital</button>
+<button class="tab-btn" onclick="filterCards('keamanan', this)">Keamanan Fisik</button>
+<button class="tab-btn" onclick="filterCards('infrastruktur', this)">Infrastruktur</button>
+<button class="tab-btn" onclick="filterCards('pengembangan', this)">Pengembangan</button>
+</div>
+</div>
+<div class="services-grid" id="servicesGrid">
+
+<div class="service-card reveal" data-cat="investigasi">
+<div class="service-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><circle cx="11" cy="11" r="3"/></svg>
+</div>
+<h3>Detektif Swasta</h3>
+<p>Layanan investigasi profesional dan rahasia untuk kasus perdata, keluarga, korporat, dan penyelidikan latar belakang individu maupun organisasi.</p>
+<div class="service-tags">
+<span class="service-tag">Investigasi Korporat</span>
+<span class="service-tag">Background Check</span>
+<span class="service-tag">Surveillance</span>
+</div>
+</div>
+
+<div class="service-card reveal" data-cat="forensik">
+<div class="service-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01M8 6h8M8 10h8M8 14h4"/></svg>
+</div>
+<h3>Forensik Android &amp; iOS</h3>
+<p>Ekstraksi, analisis, dan pemulihan data dari perangkat smartphone Android dan iOS untuk keperluan hukum, investigasi, maupun audit internal.</p>
+<div class="service-tags">
+<span class="service-tag">Data Recovery</span>
+<span class="service-tag">Chat Extraction</span>
+<span class="service-tag">Legal Evidence</span>
+</div>
+</div>
+
+<div class="service-card reveal" data-cat="forensik">
+<div class="service-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+</div>
+<h3>Forensik Windows &amp; Linux</h3>
+<p>Analisis forensik mendalam pada sistem operasi desktop dan server, mencakup log analysis, file recovery, dan investigasi insiden keamanan.</p>
+<div class="service-tags">
+<span class="service-tag">Disk Imaging</span>
+<span class="service-tag">Log Analysis</span>
+<span class="service-tag">Malware Analysis</span>
+</div>
+</div>
+
+<div class="service-card reveal" data-cat="forensik">
+<div class="service-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+</div>
+<h3>Forensik Smartwatch WearOS</h3>
+<p>Spesialisasi eksklusif dalam akuisisi dan analisis data dari perangkat wearable berbasis WearOS untuk investigasi digital lanjutan.</p>
+<div class="service-tags">
+<span class="service-tag">WearOS</span>
+<span class="service-tag">Sensor Data</span>
+<span class="service-tag">Health Records</span>
+</div>
+</div>
+
+<div class="service-card reveal" data-cat="keamanan">
+<div class="service-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15.6 11.6L22 7l-7-5-7 5 6.4 4.6"/><path d="M11 13L2 7v10l9 6 9-6V7l-9 6z"/></svg>
+</div>
+<h3>Instalasi CCTV</h3>
+<p>Pemasangan sistem CCTV resolusi tinggi untuk hunian, gedung komersial, kawasan industri dengan monitoring realtime dan penyimpanan cloud.</p>
+<div class="service-tags">
+<span class="service-tag">4K Resolution</span>
+<span class="service-tag">Night Vision</span>
+<span class="service-tag">Remote Monitor</span>
+</div>
+</div>
+
+<div class="service-card reveal" data-cat="keamanan">
+<div class="service-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+</div>
+<h3>Smart Door Lock</h3>
+<p>Sistem kunci pintu cerdas dengan teknologi biometrik, PIN, kartu akses, dan kendali via aplikasi smartphone untuk keamanan optimal.</p>
+<div class="service-tags">
+<span class="service-tag">Biometrik</span>
+<span class="service-tag">Remote Access</span>
+<span class="service-tag">Access Log</span>
+</div>
+</div>
+
+<div class="service-card reveal" data-cat="keamanan">
+<div class="service-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+</div>
+<h3>GPS Tracker</h3>
+<p>Solusi pelacakan kendaraan dan aset secara realtime dengan laporan rute, geofencing, dan notifikasi otomatis melalui platform berbasis web &amp; mobile.</p>
+<div class="service-tags">
+<span class="service-tag">Realtime Tracking</span>
+<span class="service-tag">Geofencing</span>
+<span class="service-tag">Fleet Management</span>
+</div>
+</div>
+
+<div class="service-card reveal" data-cat="keamanan">
+<div class="service-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+</div>
+<h3>Alarm &amp; Sensor Keamanan</h3>
+<p>Instalasi sistem alarm terintegrasi, sensor gerak, sensor asap, dan detektor intrusi dengan notifikasi langsung ke pemilik dan petugas keamanan.</p>
+<div class="service-tags">
+<span class="service-tag">Motion Sensor</span>
+<span class="service-tag">Smoke Detector</span>
+<span class="service-tag">Auto Notif</span>
+</div>
+</div>
+
+<div class="service-card reveal" data-cat="infrastruktur">
+<div class="service-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+</div>
+<h3>Instalasi Server &amp; NAS</h3>
+<p>Perancangan, instalasi, dan konfigurasi server fisik maupun virtual, NAS storage, serta backup system untuk keandalan data bisnis Anda.</p>
+<div class="service-tags">
+<span class="service-tag">Rack Server</span>
+<span class="service-tag">Virtualisasi</span>
+<span class="service-tag">Backup System</span>
+</div>
+</div>
+
+<div class="service-card reveal" data-cat="infrastruktur">
+<div class="service-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1"/></svg>
+</div>
+<h3>Jaringan LAN / WiFi Enterprise</h3>
+<p>Instalasi infrastruktur jaringan terstruktur, access point enterprise, VLAN, dan manajemen bandwidth untuk kantor, gedung, dan kawasan industri.</p>
+<div class="service-tags">
+<span class="service-tag">Structured Cabling</span>
+<span class="service-tag">VLAN</span>
+<span class="service-tag">Mikrotik</span>
+</div>
+</div>
+
+<div class="service-card reveal" data-cat="infrastruktur">
+<div class="service-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>
+</div>
+<h3>Cloud &amp; Virtualisasi</h3>
+<p>Migrasi ke cloud, setup infrastruktur hybrid, pengelolaan VPS, hingga deployment Docker dan Kubernetes untuk skalabilitas bisnis modern.</p>
+<div class="service-tags">
+<span class="service-tag">AWS / GCP</span>
+<span class="service-tag">Docker</span>
+<span class="service-tag">Kubernetes</span>
+</div>
+</div>
+
+<div class="service-card reveal" data-cat="pengembangan">
+<div class="service-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/><path d="M12 8v4l3 3"/></svg>
+</div>
+<h3>Pengembangan IoT</h3>
+<p>Desain dan implementasi solusi Internet of Things mulai dari sensor, gateway, hingga platform dashboard untuk pemantauan aset dan otomasi industri.</p>
+<div class="service-tags">
+<span class="service-tag">MQTT</span>
+<span class="service-tag">ESP32/Raspberry Pi</span>
+<span class="service-tag">Dashboard</span>
+</div>
+</div>
+
+<div class="service-card reveal" data-cat="pengembangan">
+<div class="service-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/></svg>
+</div>
+<h3>Solusi Kecerdasan Buatan (AI)</h3>
+<p>Pengembangan sistem AI dan machine learning untuk analitik prediktif, computer vision, NLP, chatbot, dan otomasi proses bisnis berbasis data.</p>
+<div class="service-tags">
+<span class="service-tag">Machine Learning</span>
+<span class="service-tag">Computer Vision</span>
+<span class="service-tag">NLP / Chatbot</span>
+</div>
+</div>
+
+<div class="service-card reveal" data-cat="pengembangan">
+<div class="service-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+</div>
+<h3>Pengembangan Software &amp; Aplikasi</h3>
+<p>Pengembangan aplikasi web, mobile (Android &amp; iOS), dan sistem informasi manajemen (SIM) yang scalable sesuai kebutuhan bisnis Anda.</p>
+<div class="service-tags">
+<span class="service-tag">Web App</span>
+<span class="service-tag">Mobile App</span>
+<span class="service-tag">API Integration</span>
+</div>
+</div>
+
+<div class="service-card reveal" data-cat="forensik">
+<div class="service-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+</div>
+<h3>Uji Penetrasi &amp; Audit Keamanan</h3>
+<p>Layanan penetration testing, vulnerability assessment, dan audit keamanan sistem untuk mengidentifikasi celah sebelum dieksploitasi pihak tidak bertanggung jawab.</p>
+<div class="service-tags">
+<span class="service-tag">Pentest</span>
+<span class="service-tag">VAPT</span>
+<span class="service-tag">Security Audit</span>
+</div>
+</div>
+
+<div class="service-card reveal" data-cat="pengembangan">
+<div class="service-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+</div>
+<h3>Sistem ERP &amp; Manajemen Bisnis</h3>
+<p>Implementasi dan kustomisasi sistem ERP, HRIS, dan manajemen inventori untuk efisiensi operasional perusahaan dari skala UKM hingga enterprise.</p>
+<div class="service-tags">
+<span class="service-tag">ERP</span>
+<span class="service-tag">HRIS</span>
+<span class="service-tag">Inventory</span>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="why-us" id="why">
+<div class="why-grid">
+<div>
+<div class="section-label reveal">Mengapa Kami</div>
+<h2 class="reveal">Keunggulan yang Membedakan <em>Kami</em></h2>
+<div class="why-list">
+<div class="why-item reveal">
+<div class="why-num">01</div>
+<div>
+<h3>Tim Tersertifikat &amp; Berpengalaman</h3>
+<p>Seluruh teknisi kami memiliki sertifikasi internasional di bidang keamanan siber, forensik digital, dan infrastruktur jaringan dengan jam terbang tinggi.</p>
+</div>
+</div>
+<div class="why-item reveal">
+<div class="why-num">02</div>
+<div>
+<h3>Kerahasiaan Data Terjamin</h3>
+<p>Kami menjunjung tinggi Non-Disclosure Agreement (NDA) dalam setiap proyek. Data klien ditangani dengan protokol keamanan ketat dan tidak pernah disebarluaskan.</p>
+</div>
+</div>
+<div class="why-item reveal">
+<div class="why-num">03</div>
+<div>
+<h3>Solusi Terintegrasi One-Stop</h3>
+<p>Dari analisis kebutuhan, perancangan, implementasi, hingga pemeliharaan — semua ditangani oleh satu tim profesional, menghemat waktu dan biaya Anda.</p>
+</div>
+</div>
+<div class="why-item reveal">
+<div class="why-num">04</div>
+<div>
+<h3>Respons Cepat &amp; Dukungan Penuh</h3>
+<p>Tim support kami siap merespons dalam waktu kurang dari 2 jam untuk insiden kritis, dengan layanan monitoring proaktif 24/7 sepanjang tahun.</p>
+</div>
+</div>
+<div class="why-item reveal">
+<div class="why-num">05</div>
+<div>
+<h3>Harga Transparan &amp; Kompetitif</h3>
+<p>Kami memberikan estimasi biaya terperinci sebelum pekerjaan dimulai. Tidak ada biaya tersembunyi — komitmen kami pada transparansi dan kejujuran.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="why-visual reveal" style="transition-delay:0.2s">
+<div class="tech-stack">
+<h4>Teknologi yang Kami Gunakan</h4>
+<div class="tech-items">
+<div class="tech-item">
+<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+Linux / Ubuntu
+</div>
+<div class="tech-item">
+<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+Docker / K8s
+</div>
+<div class="tech-item">
+<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+Python / Node.js
+</div>
+<div class="tech-item">
+<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1"/></svg>
+Mikrotik / Cisco
+</div>
+<div class="tech-item">
+<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>
+AWS / GCP
+</div>
+<div class="tech-item">
+<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/></svg>
+VMware / Proxmox
+</div>
+<div class="tech-item">
+<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg>
+TensorFlow / PyTorch
+</div>
+<div class="tech-item">
+<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18"/></svg>
+Cellebrite / Autopsy
+</div>
+<div class="tech-item">
+<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+ESP32 / Arduino
+</div>
+<div class="tech-item">
+<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+Hikvision / Dahua
+</div>
+<div class="tech-item">
+<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14"/><path d="M4.93 4.93a10 10 0 000 14.14"/></svg>
+React / Next.js
+</div>
+<div class="tech-item">
+<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+Kali Linux / OSINT
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="process" id="process">
+<div class="process-header">
+<div class="section-label reveal">Alur Kerja</div>
+<h2 class="reveal">Proses Profesional <em>Terstruktur</em></h2>
+</div>
+<div class="process-steps">
+<div class="process-step reveal">
+<div class="step-num">01</div>
+<h3>Konsultasi Awal</h3>
+<p>Diskusi mendalam untuk memahami kebutuhan, tantangan, dan tujuan Anda secara spesifik tanpa biaya.</p>
+</div>
+<div class="process-step reveal" style="transition-delay:0.1s">
+<div class="step-num">02</div>
+<h3>Analisis &amp; Perencanaan</h3>
+<p>Tim kami merancang solusi teknis yang paling tepat, efisien, dan sesuai anggaran yang tersedia.</p>
+</div>
+<div class="process-step reveal" style="transition-delay:0.2s">
+<div class="step-num">03</div>
+<h3>Implementasi</h3>
+<p>Eksekusi teknis dilakukan oleh tim bersertifikat dengan pengawasan ketat dan dokumentasi lengkap.</p>
+</div>
+<div class="process-step reveal" style="transition-delay:0.3s">
+<div class="step-num">04</div>
+<h3>Pengujian &amp; QA</h3>
+<p>Setiap deliverable melalui serangkaian uji kualitas dan keamanan sebelum diserahkan kepada klien.</p>
+</div>
+<div class="process-step reveal" style="transition-delay:0.4s">
+<div class="step-num">05</div>
+<h3>Dukungan Jangka Panjang</h3>
+<p>Layanan maintenance, monitoring, dan support berkelanjutan untuk memastikan sistem berjalan optimal.</p>
+</div>
+</div>
+</section>
+
+<section class="cta-section">
+<div class="cta-inner reveal">
+<div class="section-label" style="justify-content:center"><span style="display:block;width:32px;height:1px;background:var(--electric)"></span>Mulai Sekarang</div>
+<h2>Siap Tingkatkan Keamanan &amp; Infrastruktur <em>Digital Anda?</em></h2>
+<p>Konsultasikan kebutuhan teknologi Anda dengan tim ahli kami. Respon cepat, solusi tepat, hasil terukur.</p>
+<a href="#contact" class="btn-primary" style="display:inline-flex">
+<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.18 2 2 0 012.04 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+Hubungi Kami Sekarang
+</a>
+</div>
+</section>
+
+<section class="contact" id="contact">
+<div class="contact-inner">
+<div class="reveal">
+<div class="section-label">Kontak</div>
+<h2>Mari <em>Berkolaborasi</em> Bersama Kami</h2>
+<p style="color:var(--text-secondary);margin-top:16px;line-height:1.9;max-width:420px">Hubungi kami untuk konsultasi gratis. Tim kami siap membantu Anda menemukan solusi teknologi terbaik.</p>
+<div style="margin-top:40px">
+<div class="contact-detail">
+<div class="contact-detail-icon">
+<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.18 2 2 0 012.04 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+</div>
+<div class="contact-detail-text">
+<span class="contact-detail-label">Telepon / WhatsApp</span>
+<span class="contact-detail-value">0856 7882 625</span>
+</div>
+</div>
+<div class="contact-detail">
+<div class="contact-detail-icon">
+<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+</div>
+<div class="contact-detail-text">
+<span class="contact-detail-label">Email</span>
+<span class="contact-detail-value">laksanasoft@outlook.co.id</span>
+</div>
+</div>
+<div class="contact-detail">
+<div class="contact-detail-icon">
+<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+</div>
+<div class="contact-detail-text">
+<span class="contact-detail-label">Lokasi</span>
+<span class="contact-detail-value">Banjarmasin, Kalimantan Selatan</span>
+</div>
+</div>
+<div class="contact-detail">
+<div class="contact-detail-icon">
+<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+</div>
+<div class="contact-detail-text">
+<span class="contact-detail-label">Jam Operasional</span>
+<span class="contact-detail-value">Senin – Sabtu, 08.00 – 17.00 WITA</span>
+</div>
+</div>
+</div>
+</div>
+<div class="contact-form-wrap reveal" style="transition-delay:0.15s">
+<h3 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:600;margin-bottom:8px">Kirim Pesan</h3>
+<p style="color:var(--text-secondary);font-size:14px;margin-bottom:28px">Isi formulir di bawah, kami akan menghubungi Anda segera.</p>
+<div class="form-row">
+<div class="form-group">
+<label>Nama Lengkap</label>
+<input type="text" placeholder="John Doe">
+</div>
+<div class="form-group">
+<label>Nomor Telepon</label>
+<input type="tel" placeholder="08xx xxxx xxxx">
+</div>
+</div>
+<div class="form-group">
+<label>Email</label>
+<input type="email" placeholder="email@perusahaan.com">
+</div>
+<div class="form-group">
+<label>Layanan yang Diminati</label>
+<select>
+<option value="" disabled selected>Pilih Layanan</option>
+<option>Detektif Swasta</option>
+<option>Forensik Digital (Android/iOS)</option>
+<option>Forensik Windows/Linux</option>
+<option>Forensik Smartwatch WearOS</option>
+<option>Uji Penetrasi &amp; Audit Keamanan</option>
+<option>Instalasi CCTV</option>
+<option>Smart Door Lock</option>
+<option>GPS Tracker</option>
+<option>Alarm &amp; Sensor Keamanan</option>
+<option>Instalasi Server &amp; NAS</option>
+<option>Jaringan LAN / WiFi Enterprise</option>
+<option>Cloud &amp; Virtualisasi</option>
+<option>Pengembangan IoT</option>
+<option>Solusi Kecerdasan Buatan (AI)</option>
+<option>Pengembangan Software &amp; Aplikasi</option>
+<option>Sistem ERP &amp; Manajemen Bisnis</option>
+<option>Lainnya</option>
+</select>
+</div>
+<div class="form-group">
+<label>Pesan</label>
+<textarea placeholder="Ceritakan kebutuhan Anda secara singkat..."></textarea>
+</div>
+<button class="form-submit" onclick="handleSubmit(event)">
+<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+Kirim Pesan
+</button>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="footer-top">
+<div class="footer-brand">
+<a href="#" class="nav-logo" style="display:inline-flex">
+<div class="nav-logo-mark">
+<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11 2L20 7V15L11 20L2 15V7L11 2Z" stroke="white" stroke-width="1.5" fill="none"/>
+<path d="M11 6L16 9V13L11 16L6 13V9L11 6Z" fill="white" opacity="0.8"/>
+</svg>
+</div>
+<div class="nav-logo-text">
+<span>PT. Laksana Digital Industri</span>
+<span>Technology Solutions</span>
+</div>
+</a>
+<p>Solusi teknologi terintegrasi untuk bisnis dan pemerintahan. Berbasis di Banjarmasin, melayani seluruh Indonesia.</p>
+</div>
+<div class="footer-col">
+<h4>Layanan</h4>
+<ul class="footer-links">
+<li><a href="#services">Detektif Swasta</a></li>
+<li><a href="#services">Forensik Digital</a></li>
+<li><a href="#services">Instalasi CCTV</a></li>
+<li><a href="#services">Smart Door Lock</a></li>
+<li><a href="#services">GPS Tracker</a></li>
+<li><a href="#services">Pengembangan IoT</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h4>Infrastruktur</h4>
+<ul class="footer-links">
+<li><a href="#services">Instalasi Server</a></li>
+<li><a href="#services">Jaringan Enterprise</a></li>
+<li><a href="#services">Cloud &amp; VPS</a></li>
+<li><a href="#services">AI &amp; Machine Learning</a></li>
+<li><a href="#services">Pengembangan Aplikasi</a></li>
+<li><a href="#services">Sistem ERP</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h4>Perusahaan</h4>
+<ul class="footer-links">
+<li><a href="#about">Tentang Kami</a></li>
+<li><a href="#why">Keunggulan</a></li>
+<li><a href="#process">Alur Kerja</a></li>
+<li><a href="#contact">Kontak</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>&copy; 2025 PT. Laksana Digital Industri. Seluruh hak cipta dilindungi.</p>
+<div class="footer-bottom-right">
+<a href="#">Kebijakan Privasi</a>
+<a href="#">Syarat &amp; Ketentuan</a>
+</div>
+</div>
+</footer>
+
+<script>
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; });
+function animateRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; cursorRing.style.left = rx + 'px'; cursorRing.style.top = ry + 'px'; requestAnimationFrame(animateRing); }
+animateRing();
+document.querySelectorAll('a,button,.service-card,.tab-btn,.why-item').forEach(el => {
+el.addEventListener('mouseenter', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; cursorRing.style.width = '52px'; cursorRing.style.height = '52px'; });
+el.addEventListener('mouseleave', () => { cursor.style.width = '12px'; cursor.style.height = '12px'; cursorRing.style.width = '36px'; cursorRing.style.height = '36px'; });
+});
+
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+const menuClose = document.getElementById('menuClose');
+hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+menuClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+function closeMobileMenu() { mobileMenu.classList.remove('open'); }
+
+const observer = new IntersectionObserver(entries => {
+entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+function filterCards(cat, btn) {
+document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+btn.classList.add('active');
+document.querySelectorAll('.service-card').forEach(card => {
+if (cat === 'all' || card.dataset.cat === cat) {
+card.style.display = '';
+} else {
+card.style.display = 'none';
+}
+});
+}
+
+function handleSubmit(e) {
+e.preventDefault();
+const btn = e.target;
+const orig = btn.innerHTML;
+btn.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Pesan Terkirim!';
+btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 3000);
+}
+
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+if (window.scrollY > 40) { navbar.style.background = 'rgba(10,14,23,0.95)'; }
+else { navbar.style.background = 'rgba(10,14,23,0.8)'; }
+});
+</script>
+</body>
+</html>
